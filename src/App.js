@@ -27,7 +27,13 @@ function Home() {
 
     // Add bill items
     const addBillItems = (newItems) => {
-        setItems(newItems);
+        setItems(prevItems => {
+            // If prevItems is not an array, initialize it as empty array
+            const currentItems = Array.isArray(prevItems) ? prevItems : [];
+            // If newItems is a single item, wrap it in an array
+            const itemsToAdd = Array.isArray(newItems) ? newItems : [newItems];
+            return [...currentItems, ...itemsToAdd];
+        });
     };
 
     // Assign an item to a participant
@@ -96,6 +102,12 @@ function Home() {
         }
     };
 
+    // Add this new function after other state management functions
+    const deleteItem = (index) => {
+        const updatedItems = items.filter((_, i) => i !== index);
+        setItems(updatedItems);
+    };
+
     return (
         <div className={`min-h-screen p-8 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-light text-black'}`}>
             {/* Dark Mode Toggle */}
@@ -111,10 +123,11 @@ function Home() {
             </button>
 
             <h1 className={`text-7xl font-bold mt-8 ${isDarkMode ? 'text-white' : 'text-primary-dark'}`}>
-                Bill Splitter App
+                Vizzle
             </h1>
             <p className={`text-base text-center mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Easily split your bills and track expenses.
+                Vibrant Bills, Vanquished!<br />
+                You Know What to do with that big fat bill. Vizzle~ Vizzle~ Vizzle~
             </p>
 
             {!showSummary ? (
@@ -135,7 +148,8 @@ function Home() {
                         items={items}
                         participants={participants}
                         assignItem={assignItem}
-                        updateItem={updateItem} // Pass the function here
+                        updateItem={updateItem}
+                        deleteItem={deleteItem}
                     />
 
                     {/* Display Items */}
