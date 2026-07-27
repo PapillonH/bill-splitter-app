@@ -7,9 +7,19 @@
 
 # testing
 /coverage
+/tmp/
+
+# Next.js build output
+/.next/
+/out/
+/.open-next/
+/dist/
 
 # production
 /build
+
+# legacy local tooling
+/.expo/
 
 # misc
 .DS_Store
@@ -21,5 +31,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.tsbuildinfo
 
 .env

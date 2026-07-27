@@ -1,14 +1,17 @@
 import React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "../src/components/theme-provider"
-
-const inter = Inter({ subsets: ["latin"] })
+import ServiceWorkerRegistration from "../src/components/service-worker-registration"
+import AppTelemetry from "../src/components/app-telemetry"
 
 export const metadata: Metadata = {
-  title: "Bill Splitter App",
-  description: "Split bills easily with friends",
+  title: "Vizzle — Bill Splitter",
+  description: "Scan, assign, and split a bill with friends.",
+  applicationName: "Vizzle",
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "Vizzle" },
+  formatDetection: { telephone: false },
+  icons: { icon: "/icons/icon-192.png", apple: "/icons/icon-192.png" },
 }
 
 export default function RootLayout({
@@ -18,12 +21,13 @@ export default function RootLayout({
 }) {
   return ( 
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
+          <ServiceWorkerRegistration />
+          <AppTelemetry />
         </ThemeProvider>
       </body>
     </html>
   )
 }
-

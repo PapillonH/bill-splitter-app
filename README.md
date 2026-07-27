@@ -1,133 +1,90 @@
-<<<<<<< HEAD
-# bill-splitter-app
+# Vizzle
 
-## Overview
-The Bill Splitter App is designed to make splitting bills in large group dining scenarios easier and more accurate. It helps users avoid common issues like restaurants miscounting bills and the hassle of manually splitting and collecting money from multiple people. The app streamlines the process by allowing users to input bills, assign items to individuals, and calculate each person's fair share.
+Vizzle is a responsive bill-splitting web app built with Next.js. Users can scan a receipt or enter items manually, add participants, assign items, and calculate each person's share of tax and tip.
 
 ## Features
-- **Easy Bill Entry**: Users can input the total bill and itemized costs.
-- **Item Assignment**: Assign specific items to individuals for accurate cost calculation.
-- **Tax & Tip Calculation**: Automatically distributes tax and tip based on individual item costs.
-- **Group Payment Tracking**: Keeps track of who has paid and how much each person owes.
-- **Multiple Payment Methods**: Supports cash, card, and digital payments.
-- **Receipt Scanning (Future Feature)**: Extracts bill details using OCR.
-- **Integration with Payment Apps (Future Feature)**: Allows users to send and receive payments directly within the app.
 
-## Tech Stack
-- **Frontend**: React (with Tailwind CSS for styling)
-- **Backend**: TBD (options include Node.js with Express, Firebase, or a serverless backend)
-- **Database**: TBD (Firestore, MongoDB, or PostgreSQL)
-- **OCR (Future Feature)**: Tesseract.js or a cloud-based OCR API
+- Receipt image upload and AI-assisted item extraction
+- Manual item entry and correction
+- Participant management
+- Per-item assignment, including shared items
+- Tax and tip controls
+- Per-person itemized totals
+- Automatic unfinished-bill recovery and recent bill history in browser storage
+- Installable PWA with direct phone-camera capture and basic offline startup
+- Server-side image validation, receipt-scan rate limiting, and privacy notice
+- Responsive light and dark themes
 
-## Setup and Installation
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/bill-splitter-app.git
-   ```
-2. Navigate to the project folder:
-   ```sh
-   cd bill-splitter-app
-   ```
-3. Install dependencies:
-   ```sh
-   npm install
-   ```
-4. Start the development server:
-   ```sh
-   npm start
-   ```
+## Tech stack
 
-## Usage
-1. Open the app in your browser.
-2. Create a new bill and enter the total amount.
-3. Assign items to individuals.
-4. Review and confirm each person's share.
-5. Track payments and settle outstanding balances.
+- Next.js 14 and React 18
+- TypeScript
+- Tailwind CSS and Radix UI
+- OpenAI vision for receipt extraction
+- Vitest for calculation tests
 
-## Roadmap
-- Implement receipt scanning with OCR.
-- Add integration with digital payment platforms like PayPal, Venmo, or Interac e-Transfer.
-- Introduce a user authentication system for saving and sharing bills.
-- Improve UI/UX for a seamless user experience.
+## Local development
 
-## Contributions
-Contributions are welcome! If you'd like to contribute, please fork the repository and submit a pull request.
+Requirements:
+
+- Node.js 20 or newer
+- npm
+- An OpenAI API key for receipt scanning
+
+Install dependencies:
+
+```sh
+npm install
+```
+
+Create `.env.local`:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+```
+
+Start the development server:
+
+```sh
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+Manual entry works without an OpenAI key. Receipt scanning uses this server-only key; it is never sent to browser code. Restart the development server after changing `.env.local`.
+
+On iPhone or Android, use **Take Photo** to open the rear camera. Production deployments should use HTTPS so installation and service-worker features are available consistently.
+
+## Quality checks
+
+```sh
+npm run typecheck
+npm run lint
+npm test
+npm run build
+```
+
+## Production
+
+Set the server-only environment variable in your hosting provider:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+```
+
+Never create a `NEXT_PUBLIC_OPENAI_API_KEY`; variables with `NEXT_PUBLIC_` are bundled into browser code.
+
+```sh
+npm run build
+npm start
+```
+
+Production deployments must use HTTPS for camera, PWA installation, and service-worker support. Review the built-in `/privacy` page before launch. Receipt images are forwarded to OpenAI for extraction with API response storage disabled and are not written to Vizzle storage.
+
+## Current scope
+
+Vizzle stores unfinished bills and a small bill history in the current browser. This data does not sync across devices. Authentication, database-backed history, collaborative editing, and payment collection are not implemented yet.
 
 ## License
-This project is licensed under the MIT License.
 
-## Contact
-For questions or suggestions, feel free to reach out at [your email or GitHub profile].
-
-=======
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> d7f5b09 (Initial commit)
+MIT

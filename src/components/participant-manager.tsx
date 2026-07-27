@@ -15,9 +15,17 @@ interface ParticipantManagerProps {
   participants: Person[]
   onConfirm: (participants: Person[]) => void
   onRemoveParticipant: (id: string) => void
+  onParticipantsChange: (participants: Person[]) => void
+  onBack: () => void
 }
 
-export default function ParticipantManager({ participants, onConfirm, onRemoveParticipant }: ParticipantManagerProps) {
+export default function ParticipantManager({
+  participants,
+  onConfirm,
+  onRemoveParticipant,
+  onParticipantsChange,
+  onBack,
+}: ParticipantManagerProps) {
   const [newName, setNewName] = useState("")
   const [localParticipants, setLocalParticipants] = useState<Person[]>(participants)
 
@@ -27,13 +35,18 @@ export default function ParticipantManager({ participants, onConfirm, onRemovePa
         id: uuidv4(),
         name: newName.trim(),
       }
-      setLocalParticipants([...localParticipants, newParticipant])
+      const updatedParticipants = [...localParticipants, newParticipant]
+      setLocalParticipants(updatedParticipants)
+      onParticipantsChange(updatedParticipants)
       setNewName("")
     }
   }
 
   const handleRemoveParticipant = (id: string) => {
-    setLocalParticipants(localParticipants.filter((p) => p.id !== id))
+    const updatedParticipants = localParticipants.filter((p) => p.id !== id)
+    setLocalParticipants(updatedParticipants)
+    onParticipantsChange(updatedParticipants)
+    onRemoveParticipant(id)
   }
 
   const handleConfirm = () => {
@@ -52,11 +65,11 @@ export default function ParticipantManager({ participants, onConfirm, onRemovePa
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-xl font-semibold mb-2">Who's Splitting the Bill?</h2>
-        <p className="text-muted-foreground mb-4">Add everyone who's sharing this bill</p>
+        <h2 className="text-xl font-semibold mb-2">Who&apos;s Splitting the Bill?</h2>
+        <p className="text-muted-foreground mb-4">Add everyone who&apos;s sharing this bill</p>
       </div>
 
-      <div className="flex items-end gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-end gap-2">
         <div className="flex-1">
           <Label htmlFor="participant-name">Add Person</Label>
           <Input
@@ -71,7 +84,7 @@ export default function ParticipantManager({ participants, onConfirm, onRemovePa
             }}
           />
         </div>
-        <Button onClick={handleAddParticipant} disabled={!newName.trim()}>
+        <Button className="w-full sm:w-auto" onClick={handleAddParticipant} disabled={!newName.trim()}>
           <UserPlus className="h-4 w-4 mr-2" />
           Add
         </Button>
@@ -102,12 +115,14 @@ export default function ParticipantManager({ participants, onConfirm, onRemovePa
         </div>
       )}
 
-      <div className="flex justify-end">
-        <Button onClick={handleConfirm} disabled={localParticipants.length === 0} size="lg">
-          Continue
+      <div className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3">
+        <Button className="w-full sm:w-auto" variant="outline" onClick={onBack}>
+          Back
+        </Button>
+        <Button className="w-full sm:w-auto" onClick={handleConfirm} disabled={localParticipants.length === 0} size="lg">
+          Continue to Assign
         </Button>
       </div>
     </div>
   )
 }
-
